@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductosService {
+export class VentasService {
 
   url:string;
   encabezados:any;
   
   constructor(private http:HttpClient) { 
-    this.url = "http://localhost:8080/producto"
+    this.url = "http://localhost:8080/compra"
     this.encabezados = {
       headers: new HttpHeaders(
         {
@@ -23,7 +23,7 @@ export class ProductosService {
   }
 
   /* GET index*/
-  listarProductos():Observable<any>{
+  listarVentas():Observable<any>{
     return this.http.get<any>(
       this.url,
       this.encabezados
@@ -31,39 +31,38 @@ export class ProductosService {
   }
 
   /* GET show */
-  mostrarProducto(id):Observable<any>{
-    let urlProducto = this.url + "/" + id;
+  mostrarVenta(id):Observable<any>{
+    let urlVenta = this.url + "/" + id;
     return this.http.get<any>(
-      urlProducto,
+      urlVenta,
       this.encabezados
     )
   }
 
   /* POST create */
-  crearProducto(producto){
+  crearVenta(venta){
   	return this.http.post<any>(
   		this.url,
-  		producto,
+  		venta,
   		this.encabezados
   	);
   }
 
   /* PUT update */
-  modificarProducto(producto){
+  modificarVenta(venta){
   	return this.http.put<any>(
   		this.url,
-  		producto,
+  		venta,
   		this.encabezados
   	);
   }
 
   /* DELETE destroy */
-  eliminarProducto(id){
-  	let urlProducto = this.url + "/" + id;
+  eliminarVenta(id){
+  	let urlVenta = this.url + "/" + id;
   	return this.http.delete<any>(
-  		urlProducto,
+  		urlVenta,
   		this.encabezados
   	);
   }
-
 }

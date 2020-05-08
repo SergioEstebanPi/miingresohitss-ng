@@ -6,8 +6,8 @@
         <div class="col-md-4 product-grid" *ngFor="let producto of listaProductos">
             <div class="image">
                 <a href="#">
-                    <img src="assets/images/apple-watch.jpg" class="w-100">
-                    <div class="overlay" (click)="onVer(producto.idProducto)">
+                    <img src="http://localhost:8080/{{producto.fotoProducto}}" class="w-100">
+                    <div class="overlay" (click)="onVer(producto.idProducto, productomodal)">
                         <div class="detail">Ver Descripción</div>
                     </div>
                 </a>
@@ -18,3 +18,27 @@
         </div>
     </div>
 </div>
+
+<ng-template #productomodal>
+	<div class="modal-header">
+		<h4 class="modal-title">
+			{{ producto.nombreProducto }}
+		</h4>
+	</div>
+	<div class="modal-body">
+		<div class="image">
+			<a href="#">
+				<img src="http://localhost:8080/{{producto.fotoProducto}}" class="w-100">
+			</a>
+		</div>
+		<h5 class="text-center">{{ producto.nombreProducto }}</h5>
+		<h5 class="text-center">Precio: ${{ producto.precioMinimo }}</h5>
+		<hr>
+		<h5 class="text-center">Descripción: {{ producto.descripcionProducto }}</h5>
+		<h5 class="text-center">Fabricante: {{ producto.fabricante }}</h5>
+		<h5 class="text-center">Garantia (meses): {{ producto.mesesGarantia }}</h5>
+	</div>
+	<div class="modal-footer">
+		<a href="#" (click)="onComprar(producto.idProducto)" class="btn buy">Comprar</a>
+	</div>
+</ng-template>
