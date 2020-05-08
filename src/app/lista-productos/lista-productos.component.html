@@ -1,0 +1,20 @@
+<div class="container">
+    <h1 class="text-center">Mi Ingreso HITSS</h1>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4 product-grid" *ngFor="let producto of listaProductos">
+            <div class="image">
+                <a href="#">
+                    <img src="assets/images/apple-watch.jpg" class="w-100">
+                    <div class="overlay" (click)="onVer(producto.idProducto)">
+                        <div class="detail">Ver Descripción</div>
+                    </div>
+                </a>
+            </div>
+            <h5 class="text-center">{{ producto.nombreProducto }}</h5>
+            <h5 class="text-center">Precio: ${{ producto.precioMinimo }}</h5>
+            <a href="#" (click)="onComprar(producto.idProducto)" class="btn buy">Comprar</a>
+        </div>
+    </div>
+</div>
