@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../productos.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from'sweetalert2';
+import { VentasService } from '../ventas.service';
 
 @Component({
   selector: 'app-lista-productos',
@@ -13,8 +14,11 @@ export class ListaProductosComponent implements OnInit {
 
   listaProductos:Array<any>
   producto:any
+  compra:any
+  error:boolean
 
   constructor(private _productosService:ProductosService,
+    private _ventaService:VentasService,
     private _modalService:NgbModal) { 
     this.listaProductos = []
   }
@@ -49,7 +53,41 @@ export class ListaProductosComponent implements OnInit {
   }
 
   onComprar(id){
-    alert('Comprar este producto ' + id)
+    console.log('Comprar este producto ' + id)
+
+    let idCliente = 1;
+    let idMedioPago = 1;
+    let idProducto = id;
+    let cantidad = 10;
+
+    this.compra = {
+      idCliente: idCliente,
+      idMedioPago: idMedioPago,
+      idProducto: idProducto,
+      cantidad: cantidad
+    }
+
+		this._ventaService.crearVenta(this.compra)
+			.subscribe(
+				respuesta => {
+          this.error = false;
+          
+          if(respuesta){
+            swal.fire('Registro exitoso...', "Producto comprado correctamente", 'success');
+          } else {
+            swal.fire('NO exitoso...', "Ha ocurrido un error al realizar la compra", 'warning');
+          }
+          
+          //this.compra = respuesta;
+          //console.log(this.compra);
+					//this._router.navigate(["/traer-ventas");
+				},
+				error => {
+          this.error = true;
+          console.log(error);
+          alert(error);
+				}
+		);
   }
 
 }
