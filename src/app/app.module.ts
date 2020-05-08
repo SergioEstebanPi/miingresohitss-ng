@@ -7,11 +7,15 @@ import { ListaProductosComponent } from './lista-productos/lista-productos.compo
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { ProductosService } from './productos.service';
+import { CrearProductoComponent } from './crear-producto/crear-producto.component';
+import { CrearVentaComponent } from './crear-venta/crear-venta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListaProductosComponent
+    ListaProductosComponent,
+    CrearProductoComponent,
+    CrearVentaComponent
   ],
   imports: [
     BrowserModule,
