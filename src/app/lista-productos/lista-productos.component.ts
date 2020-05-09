@@ -1,8 +1,15 @@
+declare var require: any
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../productos.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from'sweetalert2';
 import { VentasService } from '../ventas.service';
+import { ReporteService } from '../reporte.service';
+import * as moment from 'moment';
+//import * as jsPDF from 'jspdf';
+const jsPDF = require('jspdf');
+//import jsPDF from 'jspdf'
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-lista-productos',
@@ -16,15 +23,20 @@ export class ListaProductosComponent implements OnInit {
   producto:any
   compra:any
   error:boolean
+  fechaInicial:any
+  fechaFinal:any
 
   constructor(private _productosService:ProductosService,
     private _ventaService:VentasService,
+    private _reporteService:ReporteService,
     private _modalService:NgbModal) { 
     this.listaProductos = []
   }
 
   ngOnInit(): void {
     this.getProductos()
+    this.fechaInicial = new Date()
+    this.fechaFinal = new Date()
   }
 
   getProductos(){
@@ -42,12 +54,12 @@ export class ListaProductosComponent implements OnInit {
 
   onVer(id, modal){
     //alert('VER este producto ' + id)
-    let producto = this.listaProductos.filter(
+    let productoa = this.listaProductos.filter(
       producto => producto.idProducto === id
     );
-    this.producto = producto[0];
+    this.producto = productoa[0];
     this._modalService.open(modal);
-    console.log(producto[0]);
+    console.log(productoa[0]);
     //alert(producto[0].descripcionProducto)
     //swal.fire('Registro exitoso...', producto[0].descripcionProducto, 'success');
   }
@@ -88,6 +100,69 @@ export class ListaProductosComponent implements OnInit {
           alert(error);
 				}
 		);
+  }
+
+  onGenerarReporte(fechaInicial, fechaFinal){
+    console.log("fechaInicial " + fechaFinal + " fechaFinal " + fechaFinal)
+    let strFechaIni = moment(fechaInicial).format("MM-DD-YYYY")
+    let strFechaFin = moment(fechaFinal).format("MM-DD-YYYY");
+    console.log(strFechaIni + " " + strFechaFin)
+    this._reporteService.obtenerReporte(strFechaIni, strFechaFin)
+      .subscribe(
+        res => {
+          console.log(res);
+
+          const doc = new jsPDF()
+          // It can parse html:
+          // <table id="my-table"><!-- ... --></table>
+          //doc.autoTable({ html: '#my-table' })
+          let arrayReporte = []
+          for(let i=0;i<res.length;i++){
+            let productoVendido = res[i];
+
+            let fecha = new Date(productoVendido.fechaVenta)
+            let day = fecha.getDate()
+            let month = fecha.getMonth() + 1
+            let year = fecha.getFullYear()
+            let fechaVenta = "";
+            if(month < 10){
+              //console.log(`${day}-0${month}-${year}`)
+              fechaVenta = `${day}/0${month}/${year}`
+            }else{
+              //console.log(`${day}-${month}-${year}`)
+              fechaVenta = `${day}/${month}/${year}`
+            }
+            let prod = [
+              productoVendido.nombreProducto,
+              productoVendido.documentoCliente,
+              productoVendido.medioPago,
+              productoVendido.cantidad,
+              productoVendido.valorUnitario,
+              fechaVenta
+            ]
+            console.log("fecha " + fechaVenta)
+            arrayReporte.push(prod)
+          }
+
+          doc.autoTable({
+            head: [
+              ['Nombre Producto', 
+              'Documento Cliente', 
+              'Tarjeta', 'Cantidad', 
+              'Valor Unitario', 
+              "Fecha Venta"]
+            ],
+            body: arrayReporte,
+          })
+           
+          doc.save('reporteventas.pdf')
+
+
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
 }

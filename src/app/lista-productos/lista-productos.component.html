@@ -19,16 +19,19 @@
     </div>
 </div>
 
-<ng-template #productomodal>
+<ng-template #productomodal let-c="close" let-d="dismiss">
 	<div class="modal-header">
 		<h4 class="modal-title">
 			{{ producto.nombreProducto }}
 		</h4>
+		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
 	</div>
 	<div class="modal-body">
-		<div class="image">
+		<div class="image" style="text-align: center;">
 			<a href="#">
-				<img src="http://localhost:8080/{{producto.fotoProducto}}" class="w-100">
+				<img src="http://localhost:8080/{{producto.fotoProducto}}" style="max-width: 50%">
 			</a>
 		</div>
 		<h5 class="text-center">{{ producto.nombreProducto }}</h5>
@@ -42,3 +45,16 @@
 		<a href="#" (click)="onComprar(producto.idProducto)" class="btn buy">Comprar</a>
 	</div>
 </ng-template>
+
+<h1>Crear producto</h1>
+<form>
+	<div class="form-group">
+		<label for="fechaInicial">fecha inicial</label>
+		<input [(ngModel)]="fechaInicial" type="text" bsDatepicker name="fechaInicial" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="fechaFinal">fecha final</label>
+		<input [(ngModel)]="fechaFinal" type="text" bsDatepicker name="fechaFinal" class="form-control">
+	</div>
+	<a href="#" (click)="onGenerarReporte(fechaInicial, fechaFinal)" class="btn buy">Generar reporte</a>
+</form>
