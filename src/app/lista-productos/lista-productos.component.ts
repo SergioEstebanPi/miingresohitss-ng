@@ -84,8 +84,12 @@ export class ListaProductosComponent implements OnInit {
 				respuesta => {
           this.error = false;
           
+          
           if(respuesta){
-            swal.fire('Registro exitoso...', "Producto comprado correctamente", 'success');
+            let productoa = this.listaProductos.filter(
+              producto => producto.idProducto === id
+            );
+            swal.fire('Registro exitoso...', productoa[0].nombreProducto + " comprado correctamente", 'success');
           } else {
             swal.fire('NO exitoso...', "Ha ocurrido un error al realizar la compra", 'warning');
           }
