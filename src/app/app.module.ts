@@ -13,13 +13,25 @@ import { ProductosService } from './productos.service';
 import { CrearProductoComponent } from './crear-producto/crear-producto.component';
 import { CrearVentaComponent } from './crear-venta/crear-venta.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Routes, RouterModule } from '@angular/router';
+import { CabeceraComponent } from './cabecera/cabecera.component';
+import { GenerarReporteComponent } from './generar-reporte/generar-reporte.component'
+
+const routes: Routes = [
+  { path: '', component: ListaProductosComponent},
+  { path: 'crear-producto', component: CrearProductoComponent},
+  { path: 'generar-reporte', component: GenerarReporteComponent},
+  { path:"**", redirectTo:'/', pathMatch:'full'}
+]
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaProductosComponent,
     CrearProductoComponent,
-    CrearVentaComponent
+    CrearVentaComponent,
+    CabeceraComponent,
+    GenerarReporteComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +39,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [ProductosService],
   bootstrap: [AppComponent]
