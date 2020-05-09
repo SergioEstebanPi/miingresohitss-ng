@@ -15,11 +15,14 @@ import { CrearVentaComponent } from './crear-venta/crear-venta.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from '@angular/router';
 import { CabeceraComponent } from './cabecera/cabecera.component';
-import { GenerarReporteComponent } from './generar-reporte/generar-reporte.component'
+import { GenerarReporteComponent } from './generar-reporte/generar-reporte.component';
+import { EditarProductoComponent } from './editar-producto/editar-producto.component';
 
 const routes: Routes = [
   { path: '', component: ListaProductosComponent},
   { path: 'crear-producto', component: CrearProductoComponent},
+  { path: 'editar-producto/:id', component: EditarProductoComponent},
+
   { path: 'generar-reporte', component: GenerarReporteComponent},
   { path:"**", redirectTo:'/', pathMatch:'full'}
 ]
@@ -31,7 +34,8 @@ const routes: Routes = [
     CrearProductoComponent,
     CrearVentaComponent,
     CabeceraComponent,
-    GenerarReporteComponent
+    GenerarReporteComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,

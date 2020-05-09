@@ -8,26 +8,29 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong>Error</strong> No Se encuentra autorizado para realizar esta accion
 			</div>
+			<div class="form-group" style="text-align: center;">
+				<img [src]="imagenProducto" height="200" name="fotoProducto"> <br/>
+				<input id="img" type='file' (submit)="onSelectFile($event)" (change)="onSelectFile($event)">
+			</div>
 			<div class="form-group">
 				<label for="nombreProducto">Nombre:</label>
 				<input [(ngModel)]="producto.nombreProducto" type="text" name="nombreProducto" class="form-control">
 			</div>
 			<div class="form-group">
 				<label for="descripcion">Descripción:</label>
-				<textarea [(ngModel)]="producto.descripcion" type="text" name="descripcion" class="form-control"></textarea>
+				<textarea [(ngModel)]="producto.descripcionProducto" type="text" name="descripcion" class="form-control"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="precioMinimo">Precio:</label>
 				<textarea [(ngModel)]="producto.precioMinimo" type="text" name="precioMinimo" class="form-control"></textarea>
 			</div>
 			<div class="form-group">
-				<label for="fabricante">Fabricante:</label>
-				<textarea [(ngModel)]="producto.fabricante" type="text" name="fabricante" class="form-control"></textarea>
+				<label for="mesesGarantia">Garantia (meses):</label>
+				<textarea [(ngModel)]="producto.mesesGarantia" type="text" name="mesesGarantia" class="form-control"></textarea>
 			</div>
 			<div class="form-group">
-				<label for="fabricante">Foto:</label>
-				<img [src]="imagenProducto" height="200"> <br/>
-				<input id="img" type='file' (submit)="onSelectFile($event)" (change)="onSelectFile($event)">
+				<label for="fabricante">Fabricante:</label>
+				<textarea [(ngModel)]="producto.fabricante" type="text" name="fabricante" class="form-control"></textarea>
 			</div>
 			<button class="btn btn-success w-100" (click)="crearProducto()">Crear producto</button>
 		</form>
