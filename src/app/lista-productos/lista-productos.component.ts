@@ -3,6 +3,7 @@ import { ProductosService } from '../productos.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import swal from'sweetalert2';
 import { VentasService } from '../ventas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-productos',
@@ -19,7 +20,8 @@ export class ListaProductosComponent implements OnInit {
 
   constructor(private _productosService:ProductosService,
     private _ventaService:VentasService,
-    private _modalService:NgbModal) { 
+    private _modalService:NgbModal,
+    private _router:Router) { 
     this.listaProductos = []
   }
 
@@ -92,6 +94,25 @@ export class ListaProductosComponent implements OnInit {
           alert(error);
 				}
 		);
+  }
+  onEditar(id){
+    this._router.navigate(["/editar-producto/" + id]);
+  }
+  onEliminar(id){
+    this._productosService.eliminarProducto(id)
+    .subscribe(
+      res => {
+        console.log(res)
+        //this.listaProductos = res
+        swal.fire('Acción exitosa...', "Producto eliminado correctamente", 'success');
+        this.getProductos()
+        this._router.navigate(["/listar-productos"]);
+      },
+      err => {
+        console.log(err)
+        swal.fire('NO exitoso...', "No fue posible eliminar el producto", 'warning');
+      }
+    )
   }
 
 }

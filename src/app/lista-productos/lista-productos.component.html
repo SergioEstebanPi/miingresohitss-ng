@@ -14,7 +14,9 @@
             </div>
             <h5 class="text-center">{{ producto.nombreProducto }}</h5>
             <h5 class="text-center">Precio: ${{ producto.precioMinimo }}</h5>
-            <a href="#" (click)="onComprar(producto.idProducto)" class="btn buy">Comprar</a>
+			<a href="#" (click)="onComprar(producto.idProducto)" class="btn buy">Comprar</a>
+			<div (click)="onEditar(producto.idProducto)" class="btn buy">Editar</div>
+			<div (click)="onEliminar(producto.idProducto)" class="btn buy">Eliminar</div>
         </div>
     </div>
 </div>
