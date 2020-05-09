@@ -26,8 +26,8 @@ export class GenerarReporteComponent implements OnInit {
 
   onGenerarReporte(fechaInicial, fechaFinal){
     console.log("fechaInicial " + fechaFinal + " fechaFinal " + fechaFinal)
-    let strFechaIni = moment(fechaInicial).format("MM-DD-YYYY")
-    let strFechaFin = moment(fechaFinal).format("MM-DD-YYYY");
+    let strFechaIni = moment(fechaInicial).format("DD-MM-YYYY")
+    let strFechaFin = moment(fechaFinal).format("DD-MM-YYYY");
     console.log(strFechaIni + " " + strFechaFin)
     this._reporteService.obtenerReporte(strFechaIni, strFechaFin)
       .subscribe(
